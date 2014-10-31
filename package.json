@@ -1,0 +1,23 @@
+{
+  "name": "sparkles",
+  "version": "0.0.1",
+  "description": "Monitors TeamCity builds and uses data to control outlets via raspi and SainSmart four-module relay board.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ritterim/sparkles"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ritterim/sparkles/issues"
+  },
+  "homepage": "https://github.com/ritterim/sparkles",
+  "dependencies": {
+    "hapi": "^7.2.0",
+    "rpi-gpio": "^0.5.0"
+  }
+}
