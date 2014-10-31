@@ -18,6 +18,9 @@ var config = {
     }
 };
 
+var lightsInterval = null;
+var lightsStatus = true;
+
 var pingTeamcityBuildQueue = function() {
 
     var options = {
@@ -48,11 +51,20 @@ var pingTeamcityBuildQueue = function() {
 
 var toggleLights = function(buildCount) {
     if (buildCount > 0) {
-        gpio.write(7, false, function(err) {
-            console.log('The lights are on.');
-        });
+        if (lightsInterval == null) {
+            lightsInterval = setInterval(function() {
+                lightsStatus = !lightsStatus;
+                
+                gpio.write(7, lightsStatus, function(err) {
+                    console.log('The lights are ' + (lightsStatus === true ? 'off' : 'on') + '.');
+                });
+            }, 500);
+        }
     }
     else {
+        clearInterval(lightsInterval);
+        lightsInterval = null;
+        
         gpio.write(7, true, function(err) {
             console.log('The lights are off.');
         });
