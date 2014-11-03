@@ -84,7 +84,7 @@ var morseCodec = function(options) {
             }
         }
 
-        return output;
+        return output.trim();
     };
 
     function getDictionary(version) {
