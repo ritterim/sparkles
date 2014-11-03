@@ -1,6 +1,8 @@
 sparkles
 ========
 
+[![Build Status](https://travis-ci.org/ritterim/sparkles.svg?branch=master)](https://travis-ci.org/ritterim/sparkles)
+
 Monitors TeamCity builds and uses data to control outlets via Raspberry Pi and SainSmart four-module relay board
 
 ## Initialization
