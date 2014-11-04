@@ -8,7 +8,9 @@ var lightManager = function(options) {
         };
     }
 
-    var provider = options.provider === 'raspiLightProvider' ? new raspiLightProvider(options) : new fakeLightProvider(options);
+    var provider = typeof options.provider === 'string'
+        ? (options.provider === 'raspiLightProvider' ? new raspiLightProvider(options) : new fakeLightProvider(options))
+        : options.provider;
 
     this.turnOff = function() {
         provider.turnOff();
