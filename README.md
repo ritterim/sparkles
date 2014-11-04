@@ -10,4 +10,4 @@ Monitors TeamCity builds and uses data to control outlets via Raspberry Pi and S
 - Run `npm install` from the project's directory to get all dependencies.
 
 - Project must be run as `root` since we are tapping into raspi's gpio. Example of setting env. variables and running 
-as one-command: `sudo QUERY_INTERVAL='1000' TC_USER='***' TC_PASSWORD='***' TC_URI='teamcity:8080' node .`.
+as one-command: `sudo LIGHTS_PROVIDER='fakeLightsProvider' LIGHTS_BUILDING_PIN=7 QUERY_INTERVAL='1000' TC_USER='***' TC_PASSWORD='***' TC_URI='teamcity:8080' PORT=10000 node .`.
