@@ -1,75 +1,24 @@
-var gpio = require('rpi-gpio');
 var Hapi = require('hapi');
-var moment = require('moment');
-var request = require('request');
+var buildingLightManager = require('./buildingLightManager');
+
 var server = new Hapi.Server(process.env.PORT);
 
-gpio.setup(7, gpio.DIR_OUT, function() {
-    gpio.write(7, true);
-    console.log('Pin 7 is setup for output.');
-});
-
 var config = {
-    queryInterval: process.env.QUERY_INTERVAL,
+    lights: {
+        building: {
+            pin: process.env.LIGHTS_BUILDING_PIN,
+            provider: process.env.LIGHTS_BUILDING_PROVIDER
+        },
+    },
     teamcity: {
         user: process.env.TC_USER,
         password: process.env.TC_PASSWORD,
+        queryInterval: process.env.QUERY_INTERVAL,
         baseUri: process.env.TC_URI
     }
 };
 
-var lightsInterval = null;
-var lightsStatus = true;
-
-var pingTeamcityBuildQueue = function() {
-
-    var options = {
-        url: 'http://' + config.teamcity.baseUri + '/httpAuth/app/rest/builds?locator=branch:default:any,running:true',
-        method: 'GET',
-        auth: {
-            'user': config.teamcity.user,
-            'pass': config.teamcity.password
-        },
-        json: true,
-        headers : {
-            'Accept' : 'application/json',
-            'Content-Type' : 'application/json'
-        }
-    };
-
-    console.log('waiting for teamcity...');
-    request.get(options, function (error, response, body) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log("current # of builds " + "(" + moment().format("dddd, MMMM Do YYYY, h:mm:ss a") + ") : " + body.count );
-            toggleLights(body.count);
-        }
-        setTimeout(pingTeamcityBuildQueue, config.queryInterval);
-    });
-}
-
-var toggleLights = function(buildCount) {
-    if (buildCount > 0) {
-        if (lightsInterval == null) {
-            lightsInterval = setInterval(function() {
-                lightsStatus = !lightsStatus;
-                
-                gpio.write(7, lightsStatus, function(err) {
-                    console.log('The lights are ' + (lightsStatus === true ? 'off' : 'on') + '.');
-                });
-            }, 500);
-        }
-    }
-    else {
-        clearInterval(lightsInterval);
-        lightsInterval = null;
-        
-        gpio.write(7, true, function(err) {
-            console.log('The lights are off.');
-        });
-    }
-}
+var building = new buildingLightManager(config);
 
 server.route({
     method: 'GET',
@@ -81,6 +30,6 @@ server.route({
 
 server.start(function () {
     console.log('Sparkles running at: ', server.info.uri);
-    pingTeamcityBuildQueue();
+    building.start();
 });
 
