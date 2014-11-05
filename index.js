@@ -1,5 +1,6 @@
 var Hapi = require('hapi');
 var buildingLightManager = require('./buildingLightManager');
+var twitterLightManager = require('./twitterLightManager');
 
 var server = new Hapi.Server(process.env.PORT);
 
@@ -8,6 +9,15 @@ var config = {
         building: {
             pin: process.env.LIGHTS_BUILDING_PIN,
             provider: process.env.LIGHTS_BUILDING_PROVIDER
+        },
+        twitter: {
+            consumerKey: process.env.LIGHTS_TWITTER_CONSUMER_KEY,
+            consumerSecret: process.env.LIGHTS_TWITTER_CONSUMER_SECRET,
+            accessTokenKey: process.env.LIGHTS_TWITTER_ACCESS_TOKEN_KEY,
+            accessTokenSecret: process.env.LIGHTS_TWITTER_ACCESS_TOKEN_SECRET,
+            statusTrack: process.env.LIGHTS_TWITTER_STATUS_TRACK,
+            pin: process.env.LIGHTS_TWITTER_PIN,
+            provider: process.env.LIGHTS_TWITTER_PROVIDER
         },
     },
     teamcity: {
@@ -19,6 +29,7 @@ var config = {
 };
 
 var building = new buildingLightManager(config);
+var twitter = new twitterLightManager(config);
 
 server.route({
     method: 'GET',
@@ -31,5 +42,6 @@ server.route({
 server.start(function () {
     console.log('Sparkles running at: ', server.info.uri);
     building.start();
+    twitter.start();
 });
 
