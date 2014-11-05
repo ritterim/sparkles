@@ -17,7 +17,7 @@ var buildingLightManager = function(options) {
         };
     }
 
-    var light = new lightManager(options.lights);
+    var light = new lightManager(options.lights.building);
 
     var lightsInterval = null;
     var lightsStatus = true;
