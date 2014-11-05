@@ -12,6 +12,10 @@ var lightManager = function(options) {
         ? (options.provider === 'raspiLightProvider' ? new raspiLightProvider(options) : new fakeLightProvider(options))
         : options.provider;
 
+    this.blink = function(interval) {
+        provider.blink(interval);
+    };
+
     this.turnOff = function() {
         provider.turnOff();
     }
