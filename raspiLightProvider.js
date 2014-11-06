@@ -1,8 +1,10 @@
 var gpio = require('rpi-gpio');
 
 var raspiLightProvider = function(config) {
+    var ID = 'raspiLightProvider';
     var OFF = true;
     var ON = false;
+
     var pin = config.get('pin') || 7;
     var self = this;
     var blinkTimeout = null;
@@ -20,6 +22,10 @@ var raspiLightProvider = function(config) {
         blinkTimeout = setTimeout(function() {
             self.turnOff();
         }, interval);
+    };
+
+    this.getId = function() {
+        return ID;
     };
 
     this.turnOff = function() {
