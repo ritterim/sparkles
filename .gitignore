@@ -29,3 +29,7 @@ node_modules
 
 # Emacs-related
 *~
+
+# Config-related DO NOT REMOVE! THESE FILES WILL CONTAIN PASSWORD, ETC.
+local.*
+local-*.*

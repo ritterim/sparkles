@@ -14,7 +14,9 @@ suite('LightManager', function() {
             var spy = sinon.spy(provider, 'turnOff');
             
             var result = new sut({
-                provider: provider
+                get: function() {
+                    return provider;
+                }
             }).turnOff();
 
             assert(spy.calledOnce);
@@ -27,7 +29,9 @@ suite('LightManager', function() {
             var spy = sinon.spy(provider, 'turnOn');
             
             var result = new sut({
-                provider: provider
+                get: function() {
+                    return provider;
+                }
             }).turnOn();
 
             assert(spy.calledOnce);

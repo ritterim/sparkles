@@ -1,0 +1,28 @@
+# pins-values are based on raspi pin-numbering.
+
+lights:
+    building:
+        pin: 7
+        provider: ''
+    twitter:
+        pin: 7
+        provider: ''
+        consumerKey: ''
+        consumerSecret: ''
+        accessTokenKey: ''
+        accessTokenSecret: ''
+        statusTrack: ''
+    pass:
+        pin: 7
+        provider: ''
+    fail:
+        pin: 7
+        provider: ''
+        exclusionList: []
+teamcity:
+    user: ''
+    password: ''
+    queryInterval: ''
+    baseUri: ''
+    buildStatusQueryInterval: ''
+port: 8080

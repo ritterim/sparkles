@@ -3,40 +3,23 @@ var moment = require('moment');
 var request = require('request');
 var cheerio = require('cheerio');
 
-var passFailLightManager = function(options) {
-    if (typeof options === 'undefined') {
-        options = {
-            lights: {
-                pass: {},
-                fail: {
-                    exclusionList: []
-                }
-            },
-            teamcity: {
-                baseUri: '',
-                password: '',
-                buildStatusQueryInterval: '',
-                user: ''
-            }
-        };
-    }
-
-    var passLight = new lightManager(options.lights.pass);
-    var failLight = new lightManager(options.lights.fail);    
+var passFailLightManager = function(config) {
+    var passLight = new lightManager(config.get('lights.pass'));
+    var failLight = new lightManager(config.get('lights.fail'));
     var togglePassFailLightsInterval = null;
     var togglePassLight = true;
 
     var scrapeTeamCity = function() {
-        var teamCityOptions = {
-            url: 'http://' + options.teamcity.baseUri,
+        var teamCityConfig = {
+            url: 'http://' + config.get('teamcity.baseUri'),
             method: 'GET',
             auth: {
-                'user': options.teamcity.user,
-                'pass': options.teamcity.password
+                'user': config.get('teamcity.user'),
+                'pass': config.get('teamcity.password')
             }
         };
 
-        request.get(teamCityOptions, function(error, response, body) {
+        request.get(teamCityConfig, function(error, response, body) {
             clearInterval(togglePassFailLightsInterval);
 
             togglePassFailLightsInterval = setInterval(function() {
@@ -52,7 +35,7 @@ var passFailLightManager = function(options) {
                 var projectTitle = $this.find('a').text();
                 var projectStatus = $this.find('.handle').attr('title');
 
-                failuresExist = projectStatus.indexOf('fail') !== -1 && !isProjectInExclusionList(projectTitle, options.lights.fail.exclusionList) ? true : failuresExist;
+                failuresExist = projectStatus.indexOf('fail') !== -1 && !isProjectInExclusionList(projectTitle, config.get('lights.fail.exclusionList')) ? true : failuresExist;
                     
                 console.log('%s (%s)', projectTitle, projectStatus);
             });
@@ -70,7 +53,7 @@ var passFailLightManager = function(options) {
                 clearInterval(togglePassFailLightsInterval);
             }, 1000);
             
-            setTimeout(scrapeTeamCity, options.teamcity.buildStatusQueryInterval);
+            setTimeout(scrapeTeamCity, config.get('teamcity.buildStatusQueryInterval'));
         });
     }
 
