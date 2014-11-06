@@ -1,16 +1,10 @@
 var fakeLightProvider = require('./fakeLightProvider');
 var raspiLightProvider = require('./raspiLightProvider');
 
-var lightManager = function(options) {
-    if (typeof options === 'undefined') {
-        options = {
-            provider: 'raspiLightProvider'
-        };
-    }
-
-    var provider = typeof options.provider === 'string'
-        ? (options.provider === 'raspiLightProvider' ? new raspiLightProvider(options) : new fakeLightProvider(options))
-        : options.provider;
+var lightManager = function(config) {
+    var provider = typeof config.get('provider') === 'string'
+        ? (config.get('provider') === 'raspiLightProvider' ? new raspiLightProvider(config) : new fakeLightProvider(config))
+        : config.get('provider');
 
     this.blink = function(interval) {
         provider.blink(interval);

@@ -2,34 +2,20 @@ var lightManager = require('./lightManager');
 var moment = require('moment');
 var request = require('request');
 
-var buildingLightManager = function(options) {
-    if (typeof options === 'undefined') {
-        options = {
-            lights: {
-                building: {}
-            },
-            teamcity: {
-                baseUri: '',
-                password: '',
-                queryInterval: '',
-                user: ''
-            }
-        };
-    }
-
-    var light = new lightManager(options.lights.building);
+var buildingLightManager = function(config) {
+    var light = new lightManager(config.get('lights.building'));
 
     var lightsInterval = null;
     var lightsStatus = true;
 
     var pingTeamcityBuildQueue = function() {
 
-        var teamCityOptions = {
-            url: 'http://' + options.teamcity.baseUri + '/httpAuth/app/rest/builds?locator=branch:default:any,running:true',
+        var teamCityConfig = {
+            url: 'http://' + config.get('teamcity.baseUri') + '/httpAuth/app/rest/builds?locator=branch:default:any,running:true',
             method: 'GET',
             auth: {
-                'user': options.teamcity.user,
-                'pass': options.teamcity.password
+                'user': config.get('teamcity.user'),
+                'pass': config.get('teamcity.password')
             },
             json: true,
             headers : {
@@ -39,14 +25,14 @@ var buildingLightManager = function(options) {
         };
 
         console.log('waiting for teamcity...');
-        request.get(teamCityOptions, function (error, response, body) {
+        request.get(teamCityConfig, function (error, response, body) {
             if (error) {
                 console.log(error);
             } else {
                 console.log("current # of builds " + "(" + moment().format("dddd, MMMM Do YYYY, h:mm:ss a") + ") : " + body.count );
                 toggleLights(body.count);
             }
-            setTimeout(pingTeamcityBuildQueue, options.teamcity.queryInterval);
+            setTimeout(pingTeamcityBuildQueue, config.get('teamcity.queryInterval'));
         });
     }
 

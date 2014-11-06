@@ -1,13 +1,9 @@
 var gpio = require('rpi-gpio');
 
-var raspiLightProvider = function(options) {
-    if (typeof options === 'undefined') {
-        options = {};
-    }
-
+var raspiLightProvider = function(config) {
     var OFF = true;
     var ON = false;
-    var pin = options.pin || 7;
+    var pin = config.get('pin') || 7;
     var self = this;
     var blinkTimeout = null;
 
