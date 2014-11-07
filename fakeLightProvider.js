@@ -1,7 +1,9 @@
 var fakeLightProvider = function(config) {
     var ID = 'fakeLightProvider';
 
-    var pin = typeof config.get('pin') === 'undefined' ? 7 : config.get('pin');
+    var pin = config.get('pin');
+    pin = pin === null ? 7 : pin;
+
     var self = this;
     var blinkTimeout = null;
 

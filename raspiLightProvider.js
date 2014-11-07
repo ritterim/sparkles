@@ -5,7 +5,9 @@ var raspiLightProvider = function(config) {
     var OFF = true;
     var ON = false;
 
-    var pin = config.get('pin') || 7;
+    var pin = config.get('pin');
+    pin = pin === null ? 7 : pin;
+
     var self = this;
     var blinkTimeout = null;
 
