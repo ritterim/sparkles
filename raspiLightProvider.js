@@ -30,6 +30,10 @@ var raspiLightProvider = function(config) {
         return ID;
     };
 
+    this.getPin = function() {
+        return pin;
+    };
+
     this.turnOff = function() {
         gpio.write(pin, OFF);
     };

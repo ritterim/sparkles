@@ -22,6 +22,10 @@ var fakeLightProvider = function(config) {
         return ID;
     }
 
+    this.getPin = function() {
+        return pin;
+    };
+
     this.turnOff = function() {
         console.log('Turning pin %s off', pin);
     };
