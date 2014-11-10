@@ -2,9 +2,13 @@
 
 lights:
     building:
+        off: false
+        on: true
         pin: 7
         provider: ''
     twitter:
+        off: false
+        on: true
         pin: 7
         provider: ''
         consumerKey: ''
@@ -13,9 +17,13 @@ lights:
         accessTokenSecret: ''
         statusTrack: ''
     pass:
+        off: false
+        on: true
         pin: 7
         provider: ''
     fail:
+        off: false
+        on: true
         pin: 7
         provider: ''
         exclusionList: []
