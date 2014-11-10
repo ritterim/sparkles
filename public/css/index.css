@@ -1,0 +1,70 @@
+body {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+#main-container {
+    height: 100%;
+}
+
+#header {
+    height: 10%;
+}
+
+#logo-container {
+    height: 100%;
+}
+
+#logo {
+    display: inline-block;
+    height: 100%;
+    max-width: 100%;
+}
+
+/* 28px comes from .content's margin-top */
+#content {
+    height: calc(90% - 28px);
+    margin-top: 14px;
+}
+
+.panels {
+    height: 100%;
+}
+
+.panel-container {
+    height: 100%;
+}
+
+.panel-container .panel .panel-heading {
+    height: 2em;
+}
+
+/* 30px comes from Bootstrap's .panel padding */
+.panel-container .panel .panel-body {
+    height: calc(100% - 2em - 30px);
+    overflow-y: auto;
+}
+
+.panel-container .panel-heading {
+    font-size: 2em;
+}
+
+/* 21px comes from Bootstrap's .panel border and bottom-margin */
+#building-panel, #twitter-panel, #pass-fail-panel {
+    height: calc(100% - 21px);
+}
+
+#building-panel-build-time {
+    font-family: monospace;
+}
+
+#pass-fail-panel-all-passing, #pass-fail-panel-some-failing {
+    height: 100%;
+}
+
+#pass-fail-panel-all-passing-icon, #pass-fail-panel-some-failing-icon {
+    font-size: 5em;
+    top: 50%;
+    transform: translateY(-50%);
+}

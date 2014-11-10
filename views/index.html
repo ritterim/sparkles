@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>:sparkles:</title>
+        <link rel="icon" type="image/png" href="/public/images/favicon.png" />
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/public/css/index.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="main-container" class="container">
+            <div id="header" class="row">
+                <div id="logo-container" class="col-md-12 text-center">
+                    <img id="logo" src="/public/images/logo.png" alt=":sparkes: logo" />
+                </div>
+            </div>
+            <div id="content">
+                <div class="row panels">
+                    <div class="col-md-4 panel-container">
+                        <div id="building-panel" class="panel panel-default text-center">
+                            <div class="panel-heading">
+                                Build
+                            </div>
+                            <div class="panel-body">
+                                <h3>
+                                    Number of builds:&nbsp;
+                                    <strong data-bind="text: numberOfBuilds"></strong>
+                                </h3>
+                                <br />
+                                <br />
+                                <div id="build-counter">
+                                    <h3>Building</h3>
+                                    <h3>
+                                        <i class="glyphicon glyphicon-time"></i>
+                                        &nbsp;
+                                        <span id="building-panel-build-time" data-bind="text: buildTime"></span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 panel-container">
+                        <div id="twitter-panel" class="panel panel-default text-center">
+                            <div class="panel-heading">
+                                Twitter
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped">
+                                    <tbody data-bind="foreach: tweets">
+                                        <tr>
+                                            <td class="col-md-1">
+                                                <img data-bind="attr: { src: user.profile_image_url }" class="image-responsive" />
+                                                <!-- ko if: retweeted -->
+                                                <br />
+                                                <img src="/public/images/retweet.png" />
+                                                <!-- /ko -->
+                                            </td>
+                                            <td class="col-md-11 text-left" data-bind="text: text"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 panel-container">
+                        <div id="pass-fail-panel" class="panel panel-default text-center">
+                            <div class="panel-heading">
+                                Pass/Fail
+                            </div>
+                            <div id="pass-fail-panel-body" class="panel-body">
+                                <div id="pass-fail-panel-all-passing" class="col-xs-6 bg-success">
+                                    <i id="pass-fail-panel-all-passing-icon" class="glyphicon glyphicon-ok text-success" data-bind="visible: isAllPassing"></i>
+                                </div>
+                                    <div id="pass-fail-panel-some-failing" class="col-xs-6 bg-danger">
+                                    <i id="pass-fail-panel-some-failing-icon" class="glyphicon glyphicon-remove text-danger" data-bind="visible: isAnyFailing"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="//cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="/public/scripts/index.js"></script>
+</html>
