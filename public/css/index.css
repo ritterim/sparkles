@@ -10,6 +10,7 @@ body {
 
 #header {
     height: 10%;
+    margin-top: 14px;
 }
 
 #logo-container {
@@ -22,7 +23,7 @@ body {
     max-width: 100%;
 }
 
-/* 28px comes from .content's margin-top */
+/* 28px comes from #header and .content's margin-top */
 #content {
     height: calc(90% - 28px);
     margin-top: 14px;
@@ -38,6 +39,7 @@ body {
 
 .panel-container .panel .panel-heading {
     height: 2em;
+    position: relative;
 }
 
 /* 30px comes from Bootstrap's .panel padding */
@@ -50,13 +52,39 @@ body {
     font-size: 2em;
 }
 
+#building-panel .panel-heading::after, #pass-fail-panel .panel-heading::after, #twitter-panel .panel-heading::after {
+    background-position: center;
+    background-repeat: no-repeat;
+    content: "";
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+}
+
+#building-panel .panel-heading::after, #pass-fail-panel .panel-heading::after {
+    background-image: url('/public/images/tc-logo.png');
+}
+
+#twitter-panel .panel-heading::after{
+    background-image: url('/public/images/twitter-logo.png');
+}
+
 /* 21px comes from Bootstrap's .panel border and bottom-margin */
 #building-panel, #twitter-panel, #pass-fail-panel {
     height: calc(100% - 21px);
 }
 
-#building-panel-build-time {
+#building-panel-build-counter {
+    margin-top: 5em;
+}
+
+#building-panel-build-count, #building-panel-build-time {
     font-family: monospace;
+    font-size: 5em;
+    font-weight: bold;
 }
 
 #pass-fail-panel-all-passing, #pass-fail-panel-some-failing {

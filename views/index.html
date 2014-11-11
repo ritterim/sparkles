@@ -18,22 +18,14 @@
                     <div class="col-md-4 panel-container">
                         <div id="building-panel" class="panel panel-default text-center">
                             <div class="panel-heading">
-                                Build
+                                Build Activity
                             </div>
                             <div class="panel-body">
-                                <h3>
-                                    Number of builds:&nbsp;
-                                    <strong data-bind="text: numberOfBuilds"></strong>
-                                </h3>
-                                <br />
-                                <br />
-                                <div id="build-counter">
-                                    <h3>Building</h3>
-                                    <h3>
-                                        <i class="glyphicon glyphicon-time"></i>
-                                        &nbsp;
-                                        <span id="building-panel-build-time" data-bind="text: buildTime"></span>
-                                    </h3>
+                                <h3>Number of builds</h3>
+                                <span id="building-panel-build-count" data-bind="text: numberOfBuilds"></span>
+                                <div id="building-panel-build-counter">
+                                    <h3>Build-time</h3>
+                                    <span id="building-panel-build-time" data-bind="text: buildTime"></span>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +56,7 @@
                     <div class="col-md-4 panel-container">
                         <div id="pass-fail-panel" class="panel panel-default text-center">
                             <div class="panel-heading">
-                                Pass/Fail
+                                Build Status
                             </div>
                             <div id="pass-fail-panel-body" class="panel-body">
                                 <div id="pass-fail-panel-all-passing" class="col-xs-6 bg-success">
@@ -84,5 +76,5 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="/public/scripts/index.js"></script>
+    <script src="/public/scripts/index.js" data-max-tweet-queue="{{maxTweetQueue}}"></script>
 </html>

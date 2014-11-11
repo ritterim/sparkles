@@ -6,10 +6,10 @@ socket.on('teamcity.building', function(message) {
 });
 
 socket.on('twitter.tweet', function(tweet) {
-    twitterPanel.tweets.push(tweet);
+    twitterPanel.tweets.unshift(tweet);
 
-    if (twitterPanel.tweets().length > 10) {
-        twitterPanel.tweets.shift();
+    if (twitterPanel.tweets().length > twitterPanel.maxTweetQueue) {
+        twitterPanel.tweets.pop();
     }
 });
 
@@ -18,7 +18,6 @@ socket.on('teamcity.buildStatus', function(isAllPassing) {
 });
 
 var buildingPanel = new function() {
-    var buildTimeInterval = null;
     var currentBuildTime = ko.observable(0);
 
     this.numberOfBuilds = ko.observable();
@@ -26,11 +25,13 @@ var buildingPanel = new function() {
 };
 
 var twitterPanel = new function() {
+    this.maxTweetQueue = document.currentScript.getAttribute('data-max-tweet-queue');
     this.tweets = ko.observableArray();
 };
 
 var passFailPanel = new function() {
     var self = this;
+
     this.isAllPassing = ko.observable();
 
     this.isAnyFailing = ko.computed(function() {

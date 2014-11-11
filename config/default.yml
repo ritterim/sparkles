@@ -16,6 +16,7 @@ lights:
         accessTokenKey: ''
         accessTokenSecret: ''
         statusTrack: ''
+        maxTweetQueue: 10
     pass:
         off: false
         on: true

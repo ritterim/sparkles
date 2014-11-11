@@ -41,7 +41,9 @@ server.route({
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
-        reply.view('index');
+        reply.view('index', {
+            maxTweetQueue: config.get('lights.twitter.maxTweetQueue')
+        });
     }
 });
 
