@@ -68,10 +68,10 @@
                             </div>
                             <div id="pass-fail-panel-body" class="panel-body">
                                 <div id="pass-fail-panel-all-passing" class="col-xs-6 bg-success">
-                                    <i id="pass-fail-panel-all-passing-icon" class="glyphicon glyphicon-ok text-success" data-bind="visible: isAllPassing"></i>
+                                    <i id="pass-fail-panel-all-passing-icon" data-bind="attr: { class: 'text-success glyphicon glyphicon-' + (isStatusUnknown() ? 'question-sign' : 'ok') }, visible: !isDataReceived() || isAllPassing"></i>
                                 </div>
                                     <div id="pass-fail-panel-some-failing" class="col-xs-6 bg-danger">
-                                    <i id="pass-fail-panel-some-failing-icon" class="glyphicon glyphicon-remove text-danger" data-bind="visible: isAnyFailing"></i>
+                                    <i id="pass-fail-panel-some-failing-icon" data-bind="attr: { class: 'text-danger glyphicon glyphicon-' + (isStatusUnknown() ? 'question-sign' : 'remove') }, visible: !isDataReceived() || isAnyFailing"></i>
                                 </div>
                             </div>
                         </div>

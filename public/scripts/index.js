@@ -19,8 +19,10 @@ socket.on('twitter.tweet', function(tweet) {
     }
 });
 
-socket.on('teamcity.buildStatus', function(isAllPassing) {
-    passFailPanel.isAllPassing(isAllPassing);
+socket.on('teamcity.buildStatus', function(message) {
+    passFailPanel.isDataReceived(true);
+    passFailPanel.isAllPassing(message.isAllPassing);
+    passFailPanel.isStatusUnknown(message.isStatusUnknown);
 });
 
 var buildingPanel = new function() {
@@ -43,6 +45,9 @@ var passFailPanel = new function() {
     this.isAnyFailing = ko.computed(function() {
         return !self.isAllPassing();
     });
+
+    this.isDataReceived = ko.observable(false);
+    this.isStatusUnknown = ko.observable(true);
 };
 
 ko.applyBindings(buildingPanel, document.getElementById('building-panel'));

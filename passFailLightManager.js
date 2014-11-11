@@ -50,7 +50,7 @@ var passFailLightManager = function(config) {
                     passLight.turnOn();
                 }
 
-                pushAllPassingStatusMessage(!failuresExist);
+                pushAllPassingStatusMessage({ isAllPassing: !failuresExist, isStatusUnknown: false });
                 clearInterval(togglePassFailLightsInterval);
             }, 1000);
 
@@ -68,18 +68,18 @@ var passFailLightManager = function(config) {
         return false;
     }
 
-    function pushAllPassingStatusMessage(isAllPassing) {
-        config.get('io').emit('teamcity.buildStatus', isAllPassing);
+    function pushAllPassingStatusMessage(message) {
+        config.get('io').emit('teamcity.buildStatus', message);
     }
 
     function togglePassFailLights(togglePass) {
         if (togglePass) {
-            pushAllPassingStatusMessage(true);
+            pushAllPassingStatusMessage({ isAllPassing: true, isStatusUnknown: true });
             failLight.turnOff();
             passLight.turnOn();
         }
         else {
-            pushAllPassingStatusMessage(false);
+            pushAllPassingStatusMessage({ isAllPassing: false, isStatusUnknown: true });
             passLight.turnOff();
             failLight.turnOn();
         }
