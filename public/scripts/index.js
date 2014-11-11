@@ -6,6 +6,12 @@ socket.on('teamcity.building', function(message) {
 });
 
 socket.on('twitter.tweet', function(tweet) {
+    /**
+     * We need to add property since not all tweets will contain it.
+     * Not having the property will cause KO to error.
+     */
+    tweet.retweeted_status = tweet.retweeted_status || null;
+
     twitterPanel.tweets.unshift(tweet);
 
     if (twitterPanel.tweets().length > twitterPanel.maxTweetQueue) {

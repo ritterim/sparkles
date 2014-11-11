@@ -96,3 +96,18 @@ body {
     top: 50%;
     transform: translateY(-50%);
 }
+
+.twitter-panel-user-name {
+    font-size: 0.9em;
+}
+
+.twitter-panel-user-screen-name {
+    font-size: 0.75em;
+    color: #aaaaaa;
+    text-decoration: none;
+}
+
+.twitter-panel-status {
+    color: #000000;
+    text-decoration: none;
+}

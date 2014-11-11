@@ -40,13 +40,21 @@
                                     <tbody data-bind="foreach: tweets">
                                         <tr>
                                             <td class="col-md-1">
-                                                <img data-bind="attr: { src: user.profile_image_url }" class="image-responsive" />
-                                                <!-- ko if: retweeted -->
+                                                <a data-bind="attr: { href: 'https://twitter.com/' + user.screen_name }">
+                                                    <img data-bind="attr: { src: user.profile_image_url }" class="image-responsive" />
+                                                </a>
+                                                <!-- ko if: (retweeted || retweeted_status) -->
                                                 <br />
                                                 <img src="/public/images/retweet.png" />
                                                 <!-- /ko -->
                                             </td>
-                                            <td class="col-md-11 text-left" data-bind="text: text"></td>
+                                            <td class="col-md-11 text-left">
+                                                <strong data-bind="text: user.name" class="twitter-panel-user-name"></strong>
+                                                &nbsp;
+                                                <a data-bind="attr: { href: 'https://twitter.com/' + user.screen_name }, text: '@' + user.screen_name" class="twitter-panel-user-screen-name"></a>
+                                                <br />
+                                                <a data-bind="attr: { href: 'https://twitter.com/_/status/' + id_str }, text: text" class="twitter-panel-status"></a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
