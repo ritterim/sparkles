@@ -32,6 +32,11 @@ var buildingLightManager = function(config) {
                 console.log("current # of builds " + "(" + moment().format("dddd, MMMM Do YYYY, h:mm:ss a") + ") : " + body.count );
                 toggleLights(body.count);
             }
+
+            processTeamCityResponse(body);
+
+            config.get('io').emit('teamcity.building', formatMessageResponse());
+
             setTimeout(pingTeamcityBuildQueue, config.get('teamcity.queryInterval'));
         });
     }
@@ -52,6 +57,50 @@ var buildingLightManager = function(config) {
 
             light.turnOff();
         }
+    }
+
+    var buildTimeInterval =  null;
+    var currentBuildTime = 0;
+    var currentBuildCount = 0;
+
+    var processTeamCityResponse = function(response) {
+        currentBuildCount = response.count;
+
+        if (currentBuildCount === 0) {
+            clearInterval(buildTimeInterval);
+            buildTimeInterval = null;
+            currentBuildTime = 0;
+        }
+        else if (currentBuildCount > 0) {
+            if (buildTimeInterval === null) {
+                buildTimeInterval = setInterval(function() {
+                    currentBuildTime += 1;
+                }, 1000);
+            }
+        }
+    };
+
+    var formatMessageResponse = function() {
+        var buildTime = '';
+
+        if (currentBuildTime > 0) {
+            var buildTime = currentBuildTime;
+            var minutes = parseInt(buildTime / 60);
+            var seconds = buildTime % 60;
+
+            minutes = minutes > 9 ? minutes : '0' + minutes;
+            seconds = seconds > 9 ? seconds : '0' + seconds;
+
+            buildTime = minutes + ':' + seconds;
+        }
+        else {
+            buildTime = '--:--';
+        }
+
+        return {
+            count: currentBuildCount,
+            elapsedTime: buildTime
+        };
     }
 
     this.start = function() {

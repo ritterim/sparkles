@@ -26,17 +26,17 @@ var passFailLightManager = function(config) {
                 togglePassFailLights(togglePassLight);
                 togglePassLight = !togglePassLight;
             }, 200);
-            
+
             var $ = cheerio.load(body);
             var failuresExist = false;
-            
+
             $('td.projectName').each(function() {
                 var $this = $(this);
                 var projectTitle = $this.find('a').text();
                 var projectStatus = $this.find('.handle').attr('title');
 
                 failuresExist = projectStatus.indexOf('fail') !== -1 && !isProjectInExclusionList(projectTitle, config.get('lights.fail.exclusionList')) ? true : failuresExist;
-                    
+
                 console.log('%s (%s)', projectTitle, projectStatus);
             });
 
@@ -50,9 +50,10 @@ var passFailLightManager = function(config) {
                     passLight.turnOn();
                 }
 
+                pushAllPassingStatusMessage({ isAllPassing: !failuresExist, isStatusUnknown: false });
                 clearInterval(togglePassFailLightsInterval);
             }, 1000);
-            
+
             setTimeout(scrapeTeamCity, config.get('teamcity.buildStatusQueryInterval'));
         });
     }
@@ -66,13 +67,19 @@ var passFailLightManager = function(config) {
 
         return false;
     }
-    
+
+    function pushAllPassingStatusMessage(message) {
+        config.get('io').emit('teamcity.buildStatus', message);
+    }
+
     function togglePassFailLights(togglePass) {
         if (togglePass) {
+            pushAllPassingStatusMessage({ isAllPassing: true, isStatusUnknown: true });
             failLight.turnOff();
             passLight.turnOn();
         }
         else {
+            pushAllPassingStatusMessage({ isAllPassing: false, isStatusUnknown: true });
             passLight.turnOff();
             failLight.turnOn();
         }

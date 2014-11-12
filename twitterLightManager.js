@@ -18,6 +18,7 @@ var twitterLightManager = function(config) {
             twitterStream = stream;
 
             twitterStream.on('data', function(data) {
+                config.get('io').emit('twitter.tweet', data);
                 light.blink(500);
             });
         });

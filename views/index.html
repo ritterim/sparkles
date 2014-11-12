@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>:sparkles:</title>
+        <link rel="icon" type="image/png" href="/public/images/favicon.png" />
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/public/css/index.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="main-container" class="container">
+            <div id="header" class="row">
+                <div id="logo-container" class="col-md-12 text-center">
+                    <img id="logo" src="/public/images/logo.png" alt=":sparkes: logo" />
+                </div>
+            </div>
+            <div id="content">
+                <div class="row panels">
+                    <div class="col-md-4 panel-container">
+                        <div id="building-panel" class="panel panel-default text-center">
+                            <div class="panel-heading">
+                                Build Activity
+                            </div>
+                            <div class="panel-body">
+                                <h3>Number of builds</h3>
+                                <span id="building-panel-build-count" data-bind="text: numberOfBuilds"></span>
+                                <div id="building-panel-build-counter">
+                                    <h3>Build-time</h3>
+                                    <span id="building-panel-build-time" data-bind="text: buildTime"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 panel-container">
+                        <div id="twitter-panel" class="panel panel-default text-center">
+                            <div class="panel-heading">
+                                Twitter
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped">
+                                    <tbody data-bind="foreach: tweets">
+                                        <tr>
+                                            <td class="col-md-1">
+                                                <a data-bind="attr: { href: 'https://twitter.com/' + user.screen_name }">
+                                                    <img data-bind="attr: { src: user.profile_image_url }" class="image-responsive" />
+                                                </a>
+                                                <!-- ko if: (retweeted || retweeted_status) -->
+                                                <br />
+                                                <img src="/public/images/retweet.png" />
+                                                <!-- /ko -->
+                                            </td>
+                                            <td class="col-md-11 text-left">
+                                                <strong data-bind="text: user.name" class="twitter-panel-user-name"></strong>
+                                                &nbsp;
+                                                <a data-bind="attr: { href: 'https://twitter.com/' + user.screen_name }, text: '@' + user.screen_name" class="twitter-panel-user-screen-name"></a>
+                                                <br />
+                                                <a data-bind="attr: { href: 'https://twitter.com/_/status/' + id_str }, text: text" class="twitter-panel-status"></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 panel-container">
+                        <div id="pass-fail-panel" class="panel panel-default text-center">
+                            <div class="panel-heading">
+                                Build Status
+                            </div>
+                            <div id="pass-fail-panel-body" class="panel-body">
+                                <div id="pass-fail-panel-all-passing" class="col-xs-6 bg-success">
+                                    <i id="pass-fail-panel-all-passing-icon" data-bind="attr: { class: 'text-success glyphicon glyphicon-' + (isStatusUnknown() ? 'question-sign' : 'ok') }, visible: !isDataReceived() || isAllPassing"></i>
+                                </div>
+                                    <div id="pass-fail-panel-some-failing" class="col-xs-6 bg-danger">
+                                    <i id="pass-fail-panel-some-failing-icon" data-bind="attr: { class: 'text-danger glyphicon glyphicon-' + (isStatusUnknown() ? 'question-sign' : 'remove') }, visible: !isDataReceived() || isAnyFailing"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="//cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="/public/scripts/index.js" data-max-tweet-queue="{{maxTweetQueue}}"></script>
+</html>
