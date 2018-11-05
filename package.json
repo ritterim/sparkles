@@ -19,7 +19,7 @@
   "dependencies": {
     "cheerio": "^0.17.0",
     "config": "^1.7.0",
-    "handlebars": "^2.0.0",
+    "handlebars": "^4.0.0",
     "hapi": "^7.2.0",
     "js-yaml": "^3.2.2",
     "moment": "^2.8.3",
